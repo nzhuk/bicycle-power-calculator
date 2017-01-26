@@ -1,10 +1,10 @@
 
 export interface IInput {
-  rollingResistanceCoefficient: number; // (lbf/lbf), 0.004 (27x1.125" 95 psi Road Clinchers Racing Tires)
-  drag: number; // Air Resistance Coefficient (lbf*s^2/ft^2), Straight Arms (Cd*A =.004),  Full Crouch (Cd*A =.0032),  Hill Descent (Cd*A =.0027),  No Rider (Cd*A=.0012), Zero Air Drag (Cd*A=0)
+  rollingResistanceCoefficient: number;
+  drag: number;
   frontChainRingTeethCount: number;
   casetteChainRingTeethCount: number;
-  mechanicalLosses: number; // (3-5% is typical)
+  mechanicalLosses: number;
   wheelDiameterInInches: number;
   desiredConstantSpeedInMilesPerHour: number;
   riderWeightInLbs: number;

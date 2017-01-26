@@ -17,12 +17,12 @@ describe("#test-calculations", () => {
             casetteChainRingTeethCount: 28,
             crankLengthInInches: 6.69, // 170mm
             desiredConstantSpeedInMilesPerHour: 6.214, //  10 km/h
-            drag: 0.004,
+            drag: 0.004, // Air Resistance Coefficient (lbf*s^2/ft^2), Straight Arms (Cd*A =.004), Full Crouch (Cd*A =.0032),  Hill Descent (Cd*A =.0027), No Rider (Cd*A=.0012), Zero Air Drag (Cd*A=0)
             frontChainRingTeethCount: 34,
             gradeInPercent: 10, // Hill incline
-            mechanicalLosses: 5.0, // 5% is pretty normal
+            mechanicalLosses: 5.0, // (3-5% is typical)
             riderWeightInLbs: 180.0, // 82 kg
-            rollingResistanceCoefficient: 0.004, // Race clinchers
+            rollingResistanceCoefficient: 0.004, // (lbf/lbf), 0.004 (27x1.125" 95 psi Road Clinchers Racing Tires)
             wheelDiameterInInches: 27.0,
         };
     });
