@@ -6,10 +6,11 @@ The function itself has been ported to TypeScript from HTML/JavaScript version f
 
 
 ## How to build
-`npm install`
+- `npm install`
+- `npm build`
 
 ## How to run unit tests
-`npm test`
+- `npm test`
 
 ## How to do your own calculations
 
