@@ -57,7 +57,7 @@ export class BikeCalculator {
     const Eff = 1 - input.mechanicalLosses / 100;
     const Wheel = input.wheelDiameterInInches / 2;
     const V = input.desiredConstantSpeedInMilesPerHour * 5280 / 3600;
-    const Wt = eval(input.riderWeightInLbs + "+" + input.bikeWeightInLbs);
+    const Wt = input.riderWeightInLbs + input.bikeWeightInLbs;
 
     const ang = Math.atan(input.gradeInPercent / 100);
     const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * input.crankLengthInInches / Wheel;
@@ -67,8 +67,8 @@ export class BikeCalculator {
     output.requiredAirPowerInHP = (Fdr * V) / 550;
     output.requiredRollPowerInHP = (Frr * V) / 550;
     output.requiredHillPowerInHP = (Wt * Math.sin(ang) * V) / 550;
-    const ExtFor = eval(Frr + "+" + Fdr);
-    const ForceT = (eval(Wt * Math.sin(ang) + " + " + ExtFor)) / (GearT * Eff);
+    const ExtFor = Frr + Fdr;
+    const ForceT = (Wt * Math.sin(ang) + ExtFor) / (GearT * Eff);
     output.averagePedalForceInLbs = ForceT;
   }
 

@@ -3,7 +3,6 @@
   "rules": {
     "prefer-const": true,
     "forin": false,
-    "no-eval": false,
     "no-console": [
       "log"
     ],
