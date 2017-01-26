@@ -12,9 +12,6 @@ let input: IInput;
 // Tests themselves
 describe("#test-calculations", () => {
     beforeEach(() => {
-        const frontTeeth = 36.0;
-        const rearTeeth = 28.0;
-
         input = {
             bikeWeightInLbs: 19.84, // 9 kg
             casetteChainRingTeethCount: 28,
