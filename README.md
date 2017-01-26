@@ -5,13 +5,13 @@ Bicycle Power Calculator is a small library (a single function, really) written 
 The function itself has been ported to TypeScript from HTML/JavaScript version found here: http://www.mne.psu.edu/simpson/courses/me240/bikecalc1.htm (1 June 1999 by John S. Lamancusa - Penn State University (jsl3@psu.edu) )
 
 
-## To build
+## How to build
 `npm install`
 
-## To run unit tests
+## How to run unit tests
 `npm test`
 
-## To do your own calculations
+## How to do your own calculations
 
 - Tweak unit tests or write some new ones
 - Run tests again
