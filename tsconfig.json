@@ -1,0 +1,18 @@
+{
+    "compileOnSave": true,
+    "include": [
+        "*.ts",
+        "test/*.ts"
+    ],
+    "compilerOptions": {
+        "outDir": "./build",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "target": "es5"
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "prefer-const": true,
+    "forin": false,
+    "no-eval": false,
+    "no-console": [
+      "log"
+    ],
+    "max-line-length": [true, 140],
+    "member-ordering": [true,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ],
+    "variable-name": [true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case"
+    ]
+  }
+}

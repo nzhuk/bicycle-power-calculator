@@ -1,0 +1,26 @@
+{
+  "name": "@nzhuk/bicycle-power-calculator",
+  "version": "0.0.1",
+  "description": "Bicycle Power Calculator is a small library (a single function, really) written in TypeScript for calculating required cycling power and other parameters",
+  "engines": {
+    "node": "6.9.4"
+  },
+  "private": true,
+  "repository": "https://github.com/nzhuk/bicycle-power-calculator/",
+  "scripts": {
+    "test": "tsc && mocha build/test/*.js",
+    "build": "tsc && webpack"
+  },
+  "author": "Nikita Zhuk <nikita@zhuk.fi>",
+  "license": "UNLICENSED",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^2.1",
+    "tslint": "^4.3",
+    "@types/mocha": "^2.2.35",
+    "@types/sinon-chai": "^2.7.27",
+    "chai": "3.5.0",
+    "ts-loader": "^2.0.0",
+    "mocha": "3.2.0"
+  }
+}
