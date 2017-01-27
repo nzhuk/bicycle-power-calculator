@@ -4,12 +4,12 @@ export interface IInput {
   frontChainRingTeethCount: number;
   casetteChainRingTeethCount: number;
   mechanicalLosses: number;
-  wheelDiameterInInches: number;
+  wheelDiameterInMillimeters: number;
   desiredConstantSpeedInKmPerHour: number;
   riderWeightInKg: number;
   bikeWeightInKg: number;
   gradeInPercent: number;
-  crankLengthInInches: number;
+  crankLengthInMillimeters: number;
 }
 
 export interface IOutput {
@@ -54,12 +54,13 @@ export function calculate(input: IInput): IOutput {
 
 function CalculateForce(input: IInput, output: IOutput): void {
   const Eff = 1 - input.mechanicalLosses / 100;
-  const Wheel = input.wheelDiameterInInches / 2;
+  const Wheel = input.wheelDiameterInMillimeters * 0.0393701 / 2;
   const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
   const TotalWeightInLbs = (input.riderWeightInKg + input.bikeWeightInKg) * 2.20462;
 
   const ang = Math.atan(input.gradeInPercent / 100);
-  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * input.crankLengthInInches / Wheel;
+  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * 
+  (input.crankLengthInMillimeters * 0.0393701) / Wheel;
   const Frr = input.rollingResistanceCoefficient * TotalWeightInLbs;
   const Fdr = input.drag * V * V;
 
@@ -73,9 +74,10 @@ function CalculateForce(input: IInput, output: IOutput): void {
 
 function CalculatePow(input: IInput, output: IOutput): void {
   const Eff = 1 - input.mechanicalLosses / 100;
-  const Wheel = input.wheelDiameterInInches / 2;
+  const Wheel = input.wheelDiameterInMillimeters * 0.0393701 / 2;
   const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
-  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * input.crankLengthInInches / Wheel;
+  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * 
+  (input.crankLengthInMillimeters * 0.0393701) / Wheel;
   const ForceT = output.averagePedalForceInLbs;
   const PowerT = (GearT * V * ForceT) / 550;
 
@@ -86,7 +88,7 @@ function CalculatePow(input: IInput, output: IOutput): void {
 
 function CalculateRPM(input: IInput, output: IOutput): void {
   const Eff = 1 - input.mechanicalLosses / 100;
-  const Wheel = input.wheelDiameterInInches / 2;
+  const Wheel = input.wheelDiameterInMillimeters * 0.0393701 / 2;
   const ForceT = output.averagePedalForceInLbs;
   const PowerT = output.requiredTotalInputInHP;
   const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
