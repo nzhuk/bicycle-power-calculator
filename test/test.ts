@@ -13,10 +13,10 @@ let input: IInput;
 describe("#test-calculations", () => {
     beforeEach(() => {
         input = {
-            bikeWeightInKg: 9, // 9 kg
+            bikeWeightInKg: 9,
             casetteChainRingTeethCount: 28,
             crankLengthInInches: 6.69, // 170mm
-            desiredConstantSpeedInMilesPerHour: 6.214, // 10 km/h
+            desiredConstantSpeedInKmPerHour: 10,
             drag: 0.004,    // Air Resistance Coefficient (lbf*s^2/ft^2):
                             // Straight Arms (Cd*A =.004)
                             // Full Crouch (Cd*A =.0032),

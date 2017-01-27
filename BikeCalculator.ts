@@ -5,7 +5,7 @@ export interface IInput {
   casetteChainRingTeethCount: number;
   mechanicalLosses: number;
   wheelDiameterInInches: number;
-  desiredConstantSpeedInMilesPerHour: number;
+  desiredConstantSpeedInKmPerHour: number;
   riderWeightInKg: number;
   bikeWeightInKg: number;
   gradeInPercent: number;
@@ -55,7 +55,7 @@ export function calculate(input: IInput): IOutput {
 function CalculateForce(input: IInput, output: IOutput): void {
   const Eff = 1 - input.mechanicalLosses / 100;
   const Wheel = input.wheelDiameterInInches / 2;
-  const V = input.desiredConstantSpeedInMilesPerHour * 5280 / 3600;
+  const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
   const TotalWeightInLbs = (input.riderWeightInKg + input.bikeWeightInKg) * 2.20462;
 
   const ang = Math.atan(input.gradeInPercent / 100);
@@ -74,7 +74,7 @@ function CalculateForce(input: IInput, output: IOutput): void {
 function CalculatePow(input: IInput, output: IOutput): void {
   const Eff = 1 - input.mechanicalLosses / 100;
   const Wheel = input.wheelDiameterInInches / 2;
-  const V = input.desiredConstantSpeedInMilesPerHour * 5280 / 3600;
+  const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
   const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * input.crankLengthInInches / Wheel;
   const ForceT = output.averagePedalForceInLbs;
   const PowerT = (GearT * V * ForceT) / 550;
@@ -89,7 +89,7 @@ function CalculateRPM(input: IInput, output: IOutput): void {
   const Wheel = input.wheelDiameterInInches / 2;
   const ForceT = output.averagePedalForceInLbs;
   const PowerT = output.requiredTotalInputInHP;
-  const V = input.desiredConstantSpeedInMilesPerHour * 5280 / 3600;
+  const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
   const RPMT = (PowerT * 550 * 60) / (ForceT * .5625 * Math.PI * 2);
   output.tireSpeedInRPM = (V * 60 * 12) / (Wheel * Math.PI * 2);
   output.pedalSpeedInRPM = RPMT;
@@ -97,7 +97,7 @@ function CalculateRPM(input: IInput, output: IOutput): void {
 
 function CalculateCal(input: IInput, output: IOutput): void {
   const PowerT = output.requiredTotalInputInHP;
-  const V = input.desiredConstantSpeedInMilesPerHour / 3600;
+  const V = input.desiredConstantSpeedInKmPerHour * 0.621371 / 3600;
   const CalT = (PowerT * 550) / (V * 3089);
   output.caloriesBurnedPerMile = CalT;
 }
