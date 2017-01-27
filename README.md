@@ -14,6 +14,6 @@ The function itself has been ported to TypeScript from HTML/JavaScript version f
 
 ## How to do your own calculations
 
-- Tweak unit tests or write some new ones
+- Tweak [unit tests](test/test.ts) or write some new ones
 - Run tests again
 - Feel free to fork & provide some UI to this :) 
