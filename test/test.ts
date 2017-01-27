@@ -1,6 +1,6 @@
 
 // Code under test
-import { calculate, IInput, IOutput } from "../BikeCalculator";
+import { calculate, Drag, IInput, IOutput, RollingResistanceCoefficient } from "../BikeCalculator";
 
 // Test infra
 import * as chai from "chai";
@@ -17,17 +17,12 @@ describe("#test-calculations", () => {
             casetteChainRingTeethCount: 28,
             crankLengthInMillimeters: 170,
             desiredConstantSpeedInKmPerHour: 10,
-            drag: 0.004,    // Air Resistance Coefficient (lbf*s^2/ft^2):
-                            // Straight Arms (Cd*A =.004)
-                            // Full Crouch (Cd*A =.0032),
-                            // Hill Descent (Cd*A =.0027)
-                            // No Rider (Cd*A=.0012)
-                            // Zero Air Drag (Cd*A=0)
+            drag: Drag.StraightArms,
             frontChainRingTeethCount: 34,
             gradeInPercent: 10, // Hill incline
             mechanicalLosses: 5, // (3-5% is typical)
             riderWeightInKg: 82,
-            rollingResistanceCoefficient: 0.004, // (lbf/lbf), 0.004 (27x1.125" 95 psi Road Clinchers Racing Tires)
+            rollingResistanceCoefficient: RollingResistanceCoefficient.RoadClinchersRacingTiresAt95Psi,
             wheelDiameterInMillimeters: 685.8,
         };
     });

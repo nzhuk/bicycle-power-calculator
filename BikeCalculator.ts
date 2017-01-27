@@ -1,6 +1,20 @@
+export enum Drag {
+  StraightArms = 0.004,
+  FullCrouch = 0.0032,
+  HillDescent = 0.0027,
+  NoRider = 0.0012,
+  ZeroDrag = 0,
+}
+
+export enum RollingResistanceCoefficient {
+  BmxKnobbyTiresAt45Psi = 0.013,
+  RoadClinchersRacingTiresAt95Psi = 0.004,
+  ZeroResistance = 0,  
+}
+
 export interface IInput {
-  rollingResistanceCoefficient: number;
-  drag: number;
+  rollingResistanceCoefficient: RollingResistanceCoefficient;
+  drag: Drag;
   frontChainRingTeethCount: number;
   casetteChainRingTeethCount: number;
   mechanicalLosses: number;
