@@ -17,6 +17,5 @@ The function itself has been ported to TypeScript from HTML/JavaScript version f
 
 ## How to do your own calculations
 
-- Tweak [unit tests](test/test.ts) or write some new ones
-- Run tests again
-- Feel free to fork & provide some UI to this :) 
+1. Use <a href="http://zhuk.fi/bicycle-power-calculator">the Bicycle Power Calculator page</a>, or:
+2. Tweak [unit tests](test/test.ts) and run them
