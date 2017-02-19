@@ -46,6 +46,18 @@ describe("#test-calculations", () => {
         expect(Math.round(calculate(input).pedalSpeedInRPM)).to.be.eql(63);
     });
 
+    it("get bike which weights 5kg", () => {
+        input.bikeWeightInKg = 5;
+        expect(Math.round(calculate(input).requiredTotalInputInWatts)).to.be.eql(263);
+        expect(Math.round(calculate(input).pedalSpeedInRPM)).to.be.eql(63);
+    });
+
+    it("get bike which weights nothing", () => {
+        input.bikeWeightInKg = 0;
+        expect(Math.round(calculate(input).requiredTotalInputInWatts)).to.be.eql(248);
+        expect(Math.round(calculate(input).pedalSpeedInRPM)).to.be.eql(63);
+    });
+
     it("lose 10kg", () => {
         input.riderWeightInKg -= 10;
         expect(Math.round(calculate(input).requiredTotalInputInWatts)).to.be.eql(245);

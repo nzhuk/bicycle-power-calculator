@@ -8,7 +8,8 @@
   "repository": "https://github.com/nzhuk/bicycle-power-calculator/",
   "scripts": {
     "test": "tsc && mocha build/test/*.js",
-    "build": "tsc && webpack"
+    "build": "tsc && webpack",
+    "preinstall": "tsc && webpack"
   },
   "author": "Nikita Zhuk <nikita@zhuk.fi>",
   "license": "UNLICENSED",
@@ -16,10 +17,11 @@
   "devDependencies": {
     "typescript": "^2.1",
     "tslint": "^4.4",
-    "@types/mocha": "^2.2.38",
+    "@types/mocha": "^2.2.39",
     "@types/sinon-chai": "^2.7.27",
     "chai": "3.5.0",
     "ts-loader": "^2.0.0",
-    "mocha": "3.2.0"
+    "mocha": "3.2.0",
+    "webpack": "^2.2"
   }
 }

@@ -9,7 +9,7 @@ export enum Drag {
 export enum RollingResistanceCoefficient {
   BmxKnobbyTiresAt45Psi = 0.013,
   RoadClinchersRacingTiresAt95Psi = 0.004,
-  ZeroResistance = 0,  
+  ZeroResistance = 0,
 }
 
 export interface IInput {
@@ -46,12 +46,24 @@ export interface IOutput {
   powerLostToMechanicalLossesInPercentage: number;
   averageTractionForceInLbs: number;
   tireSpeedInRPM: number;
-  caloriesBurnedPerMile: number;
+  caloriesBurnedPerKilometer: number;
 }
 
 export function calculate(input: IInput): IOutput {
-  const output: any = {};
+  const requiredFields = ["rollingResistanceCoefficient", "drag", "frontChainRingTeethCount",
+  "casetteChainRingTeethCount", "mechanicalLosses", "wheelDiameterInMillimeters",
+  "desiredConstantSpeedInKmPerHour", "riderWeightInKg", "bikeWeightInKg",
+  "gradeInPercent", "crankLengthInMillimeters"];
 
+  const missingFields = requiredFields.filter((field) => {
+    const value = (input as any)[field];
+    return typeof value === "undefined";
+  });
+  if (missingFields.length > 0) {
+    throw new Error("Missing required fields: " + JSON.stringify(missingFields));
+  }
+
+  const output: any = {};
   CalculateForce(input, output);
   CalculatePow(input, output);
   CalculateRPM(input, output);
@@ -73,7 +85,7 @@ function CalculateForce(input: IInput, output: IOutput): void {
   const TotalWeightInLbs = (input.riderWeightInKg + input.bikeWeightInKg) * 2.20462;
 
   const ang = Math.atan(input.gradeInPercent / 100);
-  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * 
+  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) *
   (input.crankLengthInMillimeters * 0.0393701) / Wheel;
   const Frr = input.rollingResistanceCoefficient * TotalWeightInLbs;
   const Fdr = input.drag * V * V;
@@ -90,13 +102,18 @@ function CalculatePow(input: IInput, output: IOutput): void {
   const Eff = 1 - input.mechanicalLosses / 100;
   const Wheel = input.wheelDiameterInMillimeters * 0.0393701 / 2;
   const V = input.desiredConstantSpeedInKmPerHour * 0.621371 * 5280 / 3600;
-  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) * 
+  const GearT = (1.0 * input.casetteChainRingTeethCount / input.frontChainRingTeethCount) *
   (input.crankLengthInMillimeters * 0.0393701) / Wheel;
   const ForceT = output.averagePedalForceInLbs;
   const PowerT = (GearT * V * ForceT) / 550;
 
   output.averageTractionForceInLbs = ForceT * GearT * Eff;
-  output.powerLostToMechanicalLossesInHP = PowerT - output.requiredAirPowerInHP - output.requiredRollPowerInHP - output.requiredHillPowerInHP;
+
+  output.powerLostToMechanicalLossesInHP = PowerT -
+  output.requiredAirPowerInHP -
+  output.requiredRollPowerInHP -
+  output.requiredHillPowerInHP;
+
   output.requiredTotalInputInHP = PowerT;
 }
 
@@ -114,6 +131,5 @@ function CalculateRPM(input: IInput, output: IOutput): void {
 function CalculateCal(input: IInput, output: IOutput): void {
   const PowerT = output.requiredTotalInputInHP;
   const V = input.desiredConstantSpeedInKmPerHour * 0.621371 / 3600;
-  const CalT = (PowerT * 550) / (V * 3089);
-  output.caloriesBurnedPerMile = CalT;
+  output.caloriesBurnedPerKilometer = (PowerT * 550) / (V * 3089) / 1.60934;
 }

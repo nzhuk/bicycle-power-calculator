@@ -1,0 +1,188 @@
+<html>
+
+<head>
+    <script src="../build/BikeCalculator-webPack.js" type="text/javascript"></script>
+    <script>
+        function collectInput() {
+            var fields = ["bikeWeightInKg", "casetteChainRingTeethCount", "crankLengthInMillimeters",
+                "desiredConstantSpeedInKmPerHour", "drag", "frontChainRingTeethCount", "gradeInPercent",
+                "mechanicalLosses", "riderWeightInKg", "rollingResistanceCoefficient",
+                "wheelDiameterInMillimeters"];
+
+            var input = {};
+            for (field of fields) {
+                input[field] = parseFloat(document.getElementsByName(field)[0].value);
+            }
+
+            return input;
+        }
+
+        function setOutput(output) {
+            var fields = ["caloriesBurnedPerKilometer", "pedalSpeedInRPM", "powerLostToMechanicalLossesInPercentage",
+                "requiredAirPowerInPercentage", "requiredHillPowerInPercentage", "requiredRollPowerInPercentage",
+                "requiredTotalInputInWatts"];
+            for (field of fields) {
+                document.getElementById(field).innerHTML = Math.round(output[field] * 100) / 100;
+            }
+        }
+        function calculateValues() {
+            setOutput(BikePowerCalculator.calculate(collectInput()));
+        }
+
+        function setup() {
+            var inputs = Array.prototype.slice.call(document.getElementsByTagName('input'));
+            var selects = Array.prototype.slice.call(document.getElementsByTagName('select'));
+            var all = inputs.concat(selects);
+
+            for (input of all) {
+                input.addEventListener('input', function () {
+                    calculateValues();
+                });
+            }
+
+            calculateValues();
+        }
+    </script>
+
+    <style type="text/css">
+        #container {
+            display: flex;
+        }
+        
+        form {
+            background-color: cornsilk;
+            padding: 10px;
+            line-height: 300%;
+        }
+        
+        label {
+            display: inline-block;
+            width: 220px;
+            text-align: right;
+        }
+        
+        #output {
+            background-color: mintcream;
+            padding: 10px;
+        }
+
+        #badges img {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body onload="setup()">
+
+    <h1>Bicycle Power Calculator</h1>
+
+    <div id="container">
+        <form name="input" id="input">
+            <label for="riderWeightInKg">Rider's weight (kg)</label>
+            <input type="number" name="riderWeightInKg" value="70" />
+            <br />
+
+            <label for="bikeWeightInKg">Bike Weight (kg)</label>
+            <input type="number" name="bikeWeightInKg" value="10" />
+            <br />
+
+            <label for="frontChainRingTeethCount">Front chainring teeth count</label>
+            <input type="number" name="frontChainRingTeethCount" value="52" />
+            <br />
+
+            <label for="casetteChainRingTeethCount">Rear casette chainring teeth count</label>
+            <input type="number" name="casetteChainRingTeethCount" value="36" />
+            <br />
+
+            <label for="crankLengthInMillimeters">Crank arm length (mm)</label>
+            <select name="crankLengthInMillimeters">
+            <option value="177.5">177.5 mm</option>
+            <option value="175">175 mm</option>
+            <option value="172.5" selected>172.5 mm</option>
+            <option value="170">170 mm</option>
+            <option value="165">165 mm</option>
+            <option value="160">160 mm</option>
+        </select>
+            <br />
+
+            <label for="desiredConstantSpeedInKmPerHour">Desired constant speed (km/h)</label>
+            <input type="number" name="desiredConstantSpeedInKmPerHour" value="30" />
+            <br />
+
+            <label for="drag">Body position (drag coefficient)</label>
+            <select name="drag">
+             <option value="0.0040" selected>Straight arms</option>
+             <option value="0.0032">Full crouch</option>
+             <option value="0.0027">Hill descent</option>
+             <option value="0.0021">No rider</option>
+             <option value="0.000">Zero drag</option>
+        </select>
+            <br />
+
+            <label for="gradeInPercent">Hill incline grade (%)</label>
+            <input type="number" name="gradeInPercent" value="4" />
+            <br />
+
+            <label for="mechanicalLosses">Mechanical losses (%)</label>
+            <select name="mechanicalLosses">
+            <option value="10">10 %</option>
+            <option value="5">5 %</option>
+            <option value="4" selected>4 %</option>
+            <option value="3">3 %</option>
+            <option value="2">2 %</option>
+            <option value="1">1 %</option>
+            <option value="0">0 %</option>
+        </select>
+            <br />
+
+            <label for="wheelDiameterInMillimeters">Rim diameter (mm)</label>
+            <input type="number" name="wheelDiameterInMillimeters" value="622" />
+            <br />
+
+            <label for="rollingResistanceCoefficient">Wheel type</label>
+            <select name="rollingResistanceCoefficient">
+                <option value="0.013">BMX knobby tires at 3 bar</option>
+                <option value="0.004" selected>Road clincher tires at 7 bar</option>
+                <option value="0.000">Zero resistance</option>
+            </select>
+        </form>
+
+        <div id="output">
+            <p>
+                <strong>Required power: </strong>
+                <strong><span id="requiredTotalInputInWatts"></span> W</strong>
+            </p>
+            <p>
+                Lost to:
+                <ul>
+                    <li>Air resistance: <span id="requiredAirPowerInPercentage"></span> %</li>
+                    <li>Rolling resistance: <span id="requiredRollPowerInPercentage"></span> %</li>
+                    <li>Elevation change resistance: <span id="requiredHillPowerInPercentage"></span> %</li>
+                    <li>Mechanical losses: <span id="powerLostToMechanicalLossesInPercentage"></span> %</li>
+                </ul>
+            </p>
+            <p>
+                <strong>Required pedal rpm:</strong>
+                <span id="pedalSpeedInRPM"></span> rpm
+            </p>
+            <p>
+                <strong>Calories burned:</strong>
+                <span id="caloriesBurnedPerKilometer"></span> kcal / km
+            </p>
+        </div>
+    </div>
+
+
+    <div id="badges">
+        <a href="https://www.npmjs.com/package/@nzhuk/bicycle-power-calculator"><img src="https://badge.fury.io/js/%40nzhuk%2Fbicycle-power-calculator.png" /></a>        <a href="https://github.com/nzhuk/bicycle-power-calculator/" /><img src="https://img.shields.io/github/watchers/nzhuk/bicycle-power-calculator.svg?style=social&amp;label=Watch"/></a>
+        <a href="https://twitter.com/nzhuk"><img src="https://img.shields.io/twitter/follow/nzhuk.svg?style=social&amp;label=Follow" /></a>
+    </div>
+
+    <div id="copyright">
+        Note: This web page uses functions which have been ported from
+        <a href="http://www.mne.psu.edu/simpson/courses/me240/bikecalc1.htm">Bicycle Power Calculator page  by John S. Lamancusa - Penn State University (jsl3@psu.edu), 1. June 1999.</a>
+    </div>
+
+</body>
+
+</html>
