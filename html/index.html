@@ -6,13 +6,17 @@
         function collectInput() {
             var fields = ["bikeWeightInKg", "casetteChainRingTeethCount", "crankLengthInMillimeters",
                 "desiredConstantSpeedInKmPerHour", "drag", "frontChainRingTeethCount", "gradeInPercent",
-                "mechanicalLosses", "riderWeightInKg", "rollingResistanceCoefficient",
-                "wheelDiameterInMillimeters"];
+                "mechanicalLosses", "riderWeightInKg", "rollingResistanceCoefficient"];
 
             var input = {};
             for (field of fields) {
                 input[field] = parseFloat(document.getElementsByName(field)[0].value);
             }
+
+            // Special case
+            var tireSize = parseFloat(document.getElementsByName("tireSizeInMillimeters")[0].value);
+            var rimDiameter = parseFloat(document.getElementsByName("rimDiameterInMillimeters")[0].value);
+            input["wheelDiameterInMillimeters"] = rimDiameter + tireSize * 2;
 
             return input;
         }
@@ -91,7 +95,7 @@
             <br />
 
             <label for="casetteChainRingTeethCount">Rear casette chainring teeth count</label>
-            <input type="number" name="casetteChainRingTeethCount" value="36" />
+            <input type="number" name="casetteChainRingTeethCount" value="19" />
             <br />
 
             <label for="crankLengthInMillimeters">Crank arm length (mm)</label>
@@ -135,16 +139,24 @@
         </select>
             <br />
 
-            <label for="wheelDiameterInMillimeters">Rim diameter (mm)</label>
-            <input type="number" name="wheelDiameterInMillimeters" value="622" />
+            <label for="rimDiameterInMillimeters">Rim diameter (mm)</label>
+            <input type="number" name="rimDiameterInMillimeters" value="622" />
             <br />
 
-            <label for="rollingResistanceCoefficient">Wheel type</label>
+            <label for="tireSizeInMillimeters">Tire size (mm)</label>
+            <input type="number" name="tireSizeInMillimeters" value="25" />
+            <br />
+
+            <label for="rollingResistanceCoefficient">Tire rolling resistance (CRR)</label>
             <select name="rollingResistanceCoefficient">
-                <option value="0.013">BMX knobby tires at 3 bar</option>
-                <option value="0.004" selected>Road clincher tires at 7 bar</option>
-                <option value="0.000">Zero resistance</option>
-            </select>
+                <option value="0.013">BMX knobby tires at 3 bar, rough road (CRR: 0.013)</option>
+                <option value="0.004" selected>Road clincher tires at 7-8 bar, asphalt (CRR: 0.004)</option>
+                <option value="0.003">CRR optimized road tires at 8,3 bar (CRR: 0.003)</option>
+                <option value="0.002">CRR: 0.002</option>
+                <option value="0.001">Racing tires at 10 bar, wooden track (CRR: 0.001)</option>
+                <option value="0.000">Zero resistance (CRR: 0)</option>
+            </select><br />
+            <a href="http://www.bicyclerollingresistance.com/road-bike-reviews">Check here for CRR values of various tires</a>
         </form>
 
         <div id="output">
